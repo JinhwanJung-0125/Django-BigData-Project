@@ -6,7 +6,7 @@
       <p>Dashboard</p>
     </a>
   </li>
-  {% if not request.user.is_authenticated %}
+  <!--{% if not request.user.is_authenticated %}
   <li class="{% if 'pages' in parent %}active{% endif %}">
     <a data-toggle="collapse" href="#pagesExamples">
       <i class="tim-icons icon-lock-circle"></i>
@@ -33,7 +33,7 @@
     </div>
   </li>
 
-  {% endif %}
+  {% endif %}-->
   {% admin_get_menu as app_list %}
   {% if app_list %}
   {% for app in app_list %}
@@ -71,7 +71,7 @@
   {% endfor %}
   {% endif %}
 
-  {% if request.user.is_authenticated and not request.user.is_superuser %}
+  <!--{% if request.user.is_authenticated and not request.user.is_superuser %}
   <li class="{% if 'icons' in segment %} active {% endif %}">
     <a href="{% url 'icons' %}">
       <i class="tim-icons icon-atom"></i>
@@ -126,5 +126,5 @@
       <p>Logout</p>
     </a>
   </li>
-  {% endif %}
+  {% endif %}-->
 </ul>

@@ -12642,6 +12642,9 @@ textarea.form-control {
 /*
  * Container style
  */
+.scroll::-webkit-scrollbar {
+    display: none;
+}
 .ps {
   overflow: hidden !important;
   overflow-anchor: none;

@@ -88,7 +88,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6 col-md-12">
+        <!--<div class="col-lg-6 col-md-12">
             <div class="card card-tasks">
                 <div class="card-header ">
                     <h6 class="title d-inline">Tasks(5)</h6>
@@ -250,32 +250,56 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6 col-md-12">
+        </div>-->
+        <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
                     <h4 class="card-title"> Simple Table</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table tablesorter " id="">
-                            <thead class=" text-primary">
-                                <tr>
-                                    <th>
-                                        Name
-                                    </th>
-                                    <th>
-                                        Country
-                                    </th>
-                                    <th>
-                                        City
-                                    </th>
-                                    <th class="text-center">
-                                        Salary
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <div class="scroll" style="height: 300px; overflow: scroll;">
+                            <table class="table tablesorter " id="">
+                                {% if house_list %}
+                                <thead class=" text-primary">
+                                    <tr>
+                                        <th>
+                                            주소
+                                        </th>
+                                        <th>
+                                            지번
+                                        </th>
+                                        <th>
+                                            Type
+                                        </th>
+                                        <th>
+                                            보증금
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for house in house_list %}
+                                    <tr>
+                                        <td>
+                                            {{house.address}}
+                                        </td>
+                                        <td>
+                                            {{house.jibun}}
+                                        </td>
+                                        <td>
+                                            {{house.houseType}}
+                                        </td>
+                                        <td>
+                                            {{house.housePrice}}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                {% endif %}
+                            </table>
+                        </div>
+                        
+                            <!--<tbody>
                                 <tr>
                                     <td>
                                         Dakota Rice
@@ -374,8 +398,7 @@
                                         $98,615
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
+                            </tbody>-->
                     </div>
                 </div>
             </div>
