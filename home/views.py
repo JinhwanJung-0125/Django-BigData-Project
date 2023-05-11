@@ -8,6 +8,6 @@ from .models import HouseTable
 def index(request):
     house_list = HouseTable.objects.order_by()
     context = {'house_list': house_list}
-
+    
     # Page from the theme 
-    return render(request, 'pages/dashboard.html', context)
+    return render(request, 'layouts/base.html', context)

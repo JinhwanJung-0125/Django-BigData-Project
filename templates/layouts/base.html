@@ -15,7 +15,9 @@
             {% block navigation %}
             {% include 'includes/navigation.html' %}
             {% endblock navigation %}
-            {% block content %}{% endblock content %}
+            {% block content %}
+            {% include 'pages/dashboard.html' %}
+            {% endblock content %}
             {% block footer %}
             {% include 'includes/footer.html' %}
             {% endblock footer %}

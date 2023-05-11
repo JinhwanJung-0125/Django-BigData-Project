@@ -1,4 +1,4 @@
-{% load static %}
+﻿{% load static %}
 <!--   Core JS Files   -->
 <script src="{% static 'assets/js/core/jquery.min.js' %}"></script>
 <script src="{% static 'assets/js/core/popper.min.js' %}"></script>
@@ -14,15 +14,193 @@
 <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="{% static 'assets/js/black-dashboard.min.js' %}?v=1.0.0"></script>
 <!-- Black Dashboard DEMO methods, don't include it in your project! -->
-<script src="{% static 'assets/demo/demo.js' %}"></script>
+<!--<script src="{% static 'assets/demo/demo.js' %}"></script>-->
 <script src="{% static 'assets/js/themeSettings.js' %}"></script>
 
 <script>
-    $(document).ready(function () {
-        // Javascript method's body can be found in assets/js/demos.js
-        demo.initDashboardPageCharts();
+    let activated = false;
+    if (!activated) { 
+        $(document).ready(function () {
+            // Javascript method's body can be found in assets/js/demos.js
+            //demo.initDashboardPageCharts();
 
-    });
+            let junse = {}
+            let wolse = {}
+            let meme = {}
+
+            {% for house in house_list %}
+            if ("{{ house.houseType }}" === "전세") {
+                if ("{{ house.address }}" in junse) {
+                    junse["{{ house.address }}"] += Number("{{ house.housePrice }}")
+                }
+                else {
+                    junse["{{ house.address }}"] = Number("{{ house.housePrice }}")
+                }
+            }
+            else if ("{{ house.houseType }}" === "월세") {
+                if ("{{ house.address }}" in wolse) {
+                    wolse["{{ house.address }}"] += Number("{{ house.monthlyPrice }}")
+                }
+                else {
+                    wolse["{{ house.address }}"] = Number("{{ house.monthlyPrice }}")
+                }
+            }
+            else {
+                if ("{{ house.address }}" in meme) {
+                    meme["{{ house.address }}"] += Number("{{ house.memePrice }}")
+                }
+                else {
+                    meme["{{ house.address }}"] = Number("{{ house.memePrice }}")
+                }
+            }
+            {% endfor %}
+
+            for (key in junse) {
+                if (key.slice(0, 3) === "경기도") {
+                    delete junse[key];
+                }
+            }
+            for (key in wolse) {
+                if (key.slice(0, 3) === "경기도") {
+                    delete wolse[key];
+                }
+            }
+            for (key in meme) {
+                if (key.slice(0, 3) === "경기도") {
+                    delete meme[key];
+                }
+            }
+
+            var chart_labels_junse = Object.keys(junse);
+            var chart_data_junse = Object.values(junse);
+            let chart_labels_wolse = Object.keys(wolse);
+            let chart_data_wolse = Object.values(wolse);
+            let chart_labels_meme = Object.keys(meme);
+            let chart_data_meme = Object.values(meme);
+
+
+            var ctx = document.getElementById("chartBig1").getContext('2d');
+            let name = document.getElementById("graph_name");
+            name.innerText = "전세 총합"
+
+            var myChartData = new Chart(ctx, {
+                type: 'bar',
+                responsive: true,
+                legend: {
+                    display: false
+                },
+                data: {
+                    labels: chart_labels_junse,
+                    datasets: [{
+                        label: "전세 보증금",
+                        fill: true,
+                        //backgroundColor: gradientStroke,
+                        //hoverBackgroundColor: gradientStroke,
+                        borderColor: '#1f8ef1',
+                        borderWidth: 2,
+                        borderDash: [],
+                        borderDashOffset: 0.0,
+                        data: chart_data_junse,
+                    }]
+                },
+                //options: gradientBarChartConfiguration
+            });
+            //var myChartData = new Chart(ctx, config);
+            $("#0").click(function () {
+                name.innerText = "전세 총합"
+                var data = myChartData.config.data;
+                data.datasets[0].data = chart_data_junse;
+                data.labels = chart_labels_junse;
+                data.datasets[0].label = "전세 보증금"
+                myChartData.update();
+            });
+            $("#1").click(function () {
+                name.innerText = "월세 총합"
+                var data = myChartData.config.data;
+                data.datasets[0].data = chart_data_wolse;
+                data.labels = chart_labels_wolse;
+                data.datasets[0].label = "월세금"
+                myChartData.update();
+            });
+
+            $("#2").click(function () {
+                name.innerText = "매매 총합"
+                var data = myChartData.config.data;
+                data.datasets[0].data = chart_data_meme;
+                data.labels = chart_labels_meme;
+                data.datasets[0].label = "매매가"
+                myChartData.update();
+            });
+
+
+            let house_address = [];
+            let select_address = document.querySelector("#select_address");
+            let address_option = document.createElement("option");
+            let location_name = document.getElementById("location_name");
+
+            {% for house in house_list %}
+            if (!(house_address.includes("{{ house.address }}"))) {
+                house_address.push("{{ house.address }}")
+            }
+            {% endfor %}
+
+            for (let i = 0; i < house_address.length; i++) {
+                if (house_address[i].slice(0, 3) === "경기도") {
+                    house_address.splice(i, 1);
+                }
+            }
+
+            for (let i = 0; i < house_address.length; i++) {
+                address_option.text = house_address[i];
+                address_option.value = house_address[i];
+                select_address.options.add(address_option);
+                address_option = document.createElement("option");
+            }
+
+            select_address.options[0].selected = true; 
+            location_name.innerText = $("#select_address option:selected").val();
+
+            $("#select_address").change(() => {
+                location_name.innerText = $("#select_address option:selected").val();
+            })
+
+            var ctx = document.getElementById("chartLinePurple").getContext("2d");
+
+            var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+            gradientStroke.addColorStop(1, 'rgba(72,72,176,0.2)');
+            gradientStroke.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+            gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
+
+            var data = {
+                labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+                datasets: [{
+                    label: "Data",
+                    fill: true,
+                    backgroundColor: gradientStroke,
+                    borderColor: '#d048b6',
+                    borderWidth: 2,
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    pointBackgroundColor: '#d048b6',
+                    pointBorderColor: 'rgba(255,255,255,0)',
+                    pointHoverBackgroundColor: '#d048b6',
+                    pointBorderWidth: 20,
+                    pointHoverRadius: 4,
+                    pointHoverBorderWidth: 15,
+                    pointRadius: 4,
+                    data: [80, 100, 70, 80, 120, 80],
+                }]
+            };
+
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                //options: gradientChartOptionsConfigurationWithTooltipPurple
+            });
+            activated = true;
+        });
+    };
 </script>
 <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 <script>
