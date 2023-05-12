@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\home",
-    "\\home\\migrations",
+    "\\nginx",
     "\\static",
     "\\static\\assets",
-    "\\static\\assets\\css",
+    "\\static\\assets\\demo",
+    "\\static\\assets\\js",
     "\\templates",
     "\\templates\\includes",
     "\\templates\\layouts",
     "\\templates\\pages"
   ],
-  "SelectedNode": "\\home\\views.py",
+  "SelectedNode": "\\static\\assets\\css\\black-dashboard.css",
   "PreviewInSolutionExplorer": false
 }
