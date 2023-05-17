@@ -47,7 +47,20 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-4" style="flex: 0 0 50%; max-width: 50%;">
+            <div class="card card-chart">
+                <div class="card-header">
+                    <h5 class="card-category">Daily Sales</h5>
+                    <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> 3,500€</h3>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="CountryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4" style="flex: 0 0 50%; max-width: 50%;">
             <div class="card card-chart">
                 <div class="card-header">
                     <div class="row">
@@ -67,37 +80,24 @@
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
-                        <canvas id="chartLinePurple"></canvas>
+                        <canvas id="chartLinePurple" height="100"></canvas>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="card card-chart">
-                <div class="card-header">
-                    <h5 class="card-category">Daily Sales</h5>
-                    <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> 3,500€</h3>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="CountryChart"></canvas>
-                    </div>
+        <!--<div class="col-lg-4">
+        <div class="card card-chart">
+            <div class="card-header">
+                <h5 class="card-category">Completed Tasks</h5>
+                <h3 class="card-title"><i class="tim-icons icon-send text-success"></i> 12,100K</h3>
+            </div>
+            <div class="card-body">
+                <div class="chart-area">
+                    <canvas id="chartLineGreen"></canvas>
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="card card-chart">
-                <div class="card-header">
-                    <h5 class="card-category">Completed Tasks</h5>
-                    <h3 class="card-title"><i class="tim-icons icon-send text-success"></i> 12,100K</h3>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="chartLineGreen"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </div>-->
     </div>
     <div class="row">
         <!--<div class="col-lg-6 col-md-12">
@@ -266,7 +266,7 @@
         <div class="col-md-12">
             <div class="card ">
                 <div class="card-header">
-                    <h4 class="card-title"> Simple Table</h4>
+                    <h4 class="card-title"> 매물 리스트</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -287,6 +287,12 @@
                                         <th>
                                             보증금
                                         </th>
+                                        <th>
+                                            월세금
+                                        </th>
+                                        <th>
+                                            매매가
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -303,6 +309,12 @@
                                         </td>
                                         <td>
                                             {{house.housePrice}}
+                                        </td>
+                                        <td>
+                                            {{house.monthlyPrice}}
+                                        </td>
+                                        <td>
+                                            {{house.memePrice}}
                                         </td>
                                     </tr>
                                     {% endfor %}

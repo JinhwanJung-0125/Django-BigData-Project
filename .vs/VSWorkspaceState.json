@@ -1,7 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\nginx",
+    "\\home",
     "\\static",
     "\\static\\assets",
     "\\static\\assets\\demo",
@@ -11,6 +11,6 @@
     "\\templates\\layouts",
     "\\templates\\pages"
   ],
-  "SelectedNode": "\\static\\assets\\css\\black-dashboard.css",
+  "SelectedNode": "\\bulk.py",
   "PreviewInSolutionExplorer": false
 }
