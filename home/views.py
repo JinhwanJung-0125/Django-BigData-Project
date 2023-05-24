@@ -10,4 +10,4 @@ def index(request):
     context = {'house_list': house_list}
     
     # Page from the theme 
-    return render(request, 'layouts/base.html', context)
+    return render(request, 'pages/dashboard.html', context)

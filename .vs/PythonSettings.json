@@ -1,4 +1,6 @@
 {
   "TestFramework": "Pytest",
-  "SuppressEnvironmentCreationPrompt": true
+  "SuppressEnvironmentCreationPrompt": true,
+  "SuppressConfigureTestFrameworkPrompt": "true",
+  "Interpreter": "Workspace|Workspace|env"
 }

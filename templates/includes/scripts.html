@@ -18,8 +18,8 @@
 <script src="{% static 'assets/js/themeSettings.js' %}"></script>
 
 <script>
-    let activated = false;
-    if (!activated) { 
+    let isActivate = false;
+    if (!isActivate) { 
         $(document).ready(function () {
             // Javascript method's body can be found in assets/js/demos.js
             //demo.initDashboardPageCharts();
@@ -137,6 +137,7 @@
             let select_address = document.querySelector("#select_address");
             let address_option = document.createElement("option");
             let location_name = document.getElementById("location_name");
+            let sidebar_name = document.getElementById("sidebarName");
 
             {% for house in house_list %}
             if (!(house_address.includes("{{ house.address }}"))) {
@@ -159,9 +160,11 @@
 
             select_address.options[0].selected = true; 
             location_name.innerText = $("#select_address option:selected").val();
+            sidebar_name.innerText = $("#select_address option:selected").val();
 
             $("#select_address").change(() => {
                 location_name.innerText = $("#select_address option:selected").val();
+                sidebar_name.innerText = $("#select_address option:selected").val();
             })
 
             var ctx = document.getElementById("chartLinePurple").getContext("2d");
@@ -198,7 +201,7 @@
                 data: data,
                 //options: gradientChartOptionsConfigurationWithTooltipPurple
             });
-            activated = true;
+            isActivated = true;
         });
     };
 </script>

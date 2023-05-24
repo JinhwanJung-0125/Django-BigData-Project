@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\core",
     "\\home",
     "\\static",
     "\\static\\assets",
-    "\\static\\assets\\demo",
-    "\\static\\assets\\js",
+    "\\static\\assets\\css",
     "\\templates",
     "\\templates\\includes",
     "\\templates\\layouts",
     "\\templates\\pages"
   ],
-  "SelectedNode": "\\bulk.py",
+  "SelectedNode": "\\manage.py",
   "PreviewInSolutionExplorer": false
 }
