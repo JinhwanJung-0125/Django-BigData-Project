@@ -203,16 +203,8 @@
             };
 
             var myChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'horizontalBar',
                 data: data,
-                options: {
-                    indexAxis: 'y',
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
-                },
                 //options: gradientChartOptionsConfigurationWithTooltipPurple
             });
             isActivated = true;
