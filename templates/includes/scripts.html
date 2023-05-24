@@ -1,9 +1,5 @@
 ﻿{% load static %}
 <!--   Core JS Files   -->
-<script src="{% static 'assets/js/core/jquery.min.js' %}"></script>
-<script src="{% static 'assets/js/core/popper.min.js' %}"></script>
-<script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
-<script src="{% static 'assets/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
 <!--  Google Maps Plugin    -->
 <!-- Place this tag in your head or just before your close body tag. -->
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
@@ -90,7 +86,6 @@
             let chart_labels_meme = Object.keys(meme);
             let chart_data_meme = Object.values(meme);
 
-
             var ctx = document.getElementById("chartBig1").getContext('2d');
             let name = document.getElementById("graph_name");
             name.innerText = "전세 총합"
@@ -176,47 +171,26 @@
 
             var ctx = document.getElementById("chartLinePurple").getContext("2d");
 
-            var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-            gradientStroke.addColorStop(1, 'rgba(72,72,176,0.2)');
-            gradientStroke.addColorStop(0.2, 'rgba(72,72,176,0.0)');
-            gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
-
             var data = {
-                labels: Object.keys(junse_location_count),
+                labels: ['전세', '월세', '매매'],
                 datasets: [{
-                    label: "Data",
-                    //fill: true,
-                    //backgroundColor: gradientStroke,
-                    //borderColor: '#d048b6',
-                    //borderWidth: 2,
-                    //borderDash: [],
-                    //borderDashOffset: 0.0,
-                    //pointBackgroundColor: '#d048b6',
-                    //pointBorderColor: 'rgba(255,255,255,0)',
-                    //pointHoverBackgroundColor: '#d048b6',
-                    //pointBorderWidth: 20,
-                    //pointHoverRadius: 4,
-                    //pointHoverBorderWidth: 15,
-                    //pointRadius: 4,
                     backgroundColor: [
                         'rgb(255, 99, 132)',
                         'rgb(54, 162, 235)',
                         'rgb(255, 205, 86)'
                     ],
                     hoverOffset: 4,
-                    data: Object.values(junse_location_count)
+                    data: [junse_location_count[location_name.innerText], wolse_location_count[location_name.innerText], meme_location_count[location_name.innerText]],
                 }]
             };
 
             var myChart = new Chart(ctx, {
                 type: 'horizontalBar',
+                responsive: true,
                 data: data,
                 options: {
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
+                    legend: {
+                        display: false
                     }
                 }
                 //options: gradientChartOptionsConfigurationWithTooltipPurple
@@ -225,7 +199,7 @@
             $("#select_address").change(() => {
                 location_name.innerText = $("#select_address option:selected").val();
                 sidebar_name.innerText = $("#select_address option:selected").val();
-                myChart.data.datasets[0].data = [junse[location_name.innerText], wolse[location_name.innerText], meme[location_name.innerText]];
+                myChart.data.datasets[0].data = [junse_location_count[location_name.innerText], wolse_location_count[location_name.innerText], meme_location_count[location_name.innerText]];
                 myChart.update();
             })
 

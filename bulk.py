@@ -7,14 +7,14 @@ django.setup()
 
 from home.models import HouseTable
 
-f = open('서울 동부 지역 직방 매물 정보.csv', 'r', encoding = 'cp949')
+f = open('total 3.csv', 'r', encoding = 'cp949')
 info = []
 
 rdr = csv.reader(f)
 next(rdr)
 
 for row in rdr:
-    idx, address, jibun, jungong, houseType, floors, housePrice, monthlyPrice, memePrice, currentlyUpdate, firstUpdate, recommend, agentName, agentAddress, agentNumber = row
+    idx,address, jibun, jungong, houseType, floors, housePrice, monthlyPrice, memePrice, currentlyUpdate, firstUpdate, recommend, agentName, agentAddress, agentNumber, latitude, longtitude = row
 
     idx = int(idx)
 
@@ -51,16 +51,16 @@ for row in rdr:
     elif recommend == "['추천']":
         recommend = True
 
-    tuple = (idx, address, jibun, jungong, houseType, floors, housePrice, monthlyPrice, memePrice, currentlyUpdate, firstUpdate, recommend, agentName, agentAddress, agentNumber)
+    tuple = (address, jibun, jungong, houseType, floors, housePrice, monthlyPrice, memePrice, currentlyUpdate, firstUpdate, recommend, agentName, agentAddress, agentNumber, latitude, longtitude)
     info.append(tuple)
 
 f.close()
 
 instances = []
 
-for (idx, address, jibun, jungong, houseType, floors, housePrice, monthlyPrice, memePrice, currentlyUpdate, firstUpdate, recommend, agentName, agentAddress, agentNumber) in info:
-    instances.append(HouseTable(idx = idx, address = address, jibun = jibun, jungong = jungong, houseType = houseType, floors = floors, housePrice = housePrice, monthlyPrice = monthlyPrice, memePrice = memePrice, currentlyUpdate = currentlyUpdate, firstUpdate = firstUpdate, recommend = recommend, agentName = agentName, agentAddress = agentAddress, agentNumber = agentNumber))
-
-HouseTable.objects.bulk_create(instances)
+for (address, jibun, jungong, houseType, floors, housePrice, monthlyPrice, memePrice, currentlyUpdate, firstUpdate, recommend, agentName, agentAddress, agentNumber, latitude, longtitude) in info:
+    instances.append(HouseTable(address = address, jibun = jibun, jungong = jungong, houseType = houseType, floors = floors, housePrice = housePrice, monthlyPrice = monthlyPrice, memePrice = memePrice, currentlyUpdate = currentlyUpdate, firstUpdate = firstUpdate, recommend = recommend, agentName = agentName, agentAddress = agentAddress, agentNumber = agentNumber, latitude = latitude, longtitude = longtitude))
 
 print(instances)
+
+HouseTable.objects.bulk_create(instances)

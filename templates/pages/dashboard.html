@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="chart-area" style="height: 100%;">
+                    <div class="chart-area" style="height: 0%;">
                         <canvas id="chartBig1"></canvas>
                     </div>
                 </div>
@@ -50,37 +50,58 @@
         <div class="col-lg-4" style="flex: 0 0 50%; max-width: 50%;">
             <div class="card card-chart">
                 <div class="card-header">
-                    <h5 class="card-category">Daily Sales</h5>
-                    <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> 3,500€</h3>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="CountryChart"></canvas>
+                    <div class="col-sm-6 text-left">
+                        <h5 class="card-category">지역별</h5>
+                        <h3 class="card-title"><i class="text-primary">매물 위치</i></h3>
                     </div>
                 </div>
+            <div class="card-body">
+                <div class="chart-area" id="map">
+                    <script>
+                        let map = L.map('map').setView([37.5664700, 126.9779630], 14);
+
+                        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19,
+                            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                        }).addTo(map);
+
+                        //$("#houseTable").on('click', 'tr', function () {
+                        //    console.log("ddddddd")
+                        //    let row = $("#houseTable").DataTable().row($(this)).data()
+                        //    console.log(row);
+                        //})
+
+                        $(document).on('click', '#houseTable', function (event) {
+                            console.log(event)
+                        })
+
+                    </script>
+                    <!--<canvas id="CountryChart"></canvas>-->
+                </div>
             </div>
+        </div>
         </div>
         <div class="col-lg-4" style="flex: 0 0 50%; max-width: 50%;">
             <div class="card card-chart">
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm-6 text-left">
-                            <h5 class="card-category">지역별</h5>
+                            <h5 class="card-category">걸러진 매물 수</h5>
                             <h3 class="card-title"><i class="text-primary" id="location_name"></i></h3>
                         </div>
                         <div class="col-sm-6">
-                            <!--div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                            <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
                                 <label class="btn btn-sm btn-primary btn-simple active" id="3">
                                     <select name="options" id="select_address" style="border-style: none; background: none;">
                                     </select>
                                 </label>
-                            </div>-->
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="chartLinePurple" height="100"></canvas>
+                <div class="card-body" style="height: 100%;">
+                    <div class="chart-area" style="height: 400px;">
+                        <canvas id="chartLinePurple"></canvas>
                     </div>
                 </div>
             </div>
@@ -271,7 +292,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <div class="scroll" style="height: 300px; overflow: scroll;">
-                            <table class="table tablesorter " id="">
+                            <table class="table tablesorter " id="houseTable">
                                 {% if house_list %}
                                 <thead class=" text-primary">
                                     <tr>
