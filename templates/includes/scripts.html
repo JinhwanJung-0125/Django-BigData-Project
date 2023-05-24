@@ -27,30 +27,39 @@
             let junse = {}
             let wolse = {}
             let meme = {}
+            let junse_location_count = {}
+            let wolse_location_count = {}
+            let meme_location_count = {}
 
             {% for house in house_list %}
             if ("{{ house.houseType }}" === "전세") {
                 if ("{{ house.address }}" in junse) {
                     junse["{{ house.address }}"] += Number("{{ house.housePrice }}")
+                    junse_location_count["{{ house.address }}"] += 1
                 }
                 else {
                     junse["{{ house.address }}"] = Number("{{ house.housePrice }}")
+                    junse_location_count["{{ house.address }}"] = 1
                 }
             }
             else if ("{{ house.houseType }}" === "월세") {
                 if ("{{ house.address }}" in wolse) {
                     wolse["{{ house.address }}"] += Number("{{ house.monthlyPrice }}")
+                    wolse_location_count["{{ house.address }}"] += 1
                 }
                 else {
                     wolse["{{ house.address }}"] = Number("{{ house.monthlyPrice }}")
+                    wolse_location_count["{{ house.address }}"] = 1
                 }
             }
             else {
                 if ("{{ house.address }}" in meme) {
                     meme["{{ house.address }}"] += Number("{{ house.memePrice }}")
+                    meme_location_count["{{ house.address }}"] += 1
                 }
                 else {
                     meme["{{ house.address }}"] = Number("{{ house.memePrice }}")
+                    meme_location_count["{{ house.address }}"] = 1
                 }
             }
             {% endfor %}
@@ -58,16 +67,19 @@
             for (key in junse) {
                 if (key.slice(0, 3) === "경기도") {
                     delete junse[key];
+                    delete junse_location_count[key];
                 }
             }
             for (key in wolse) {
                 if (key.slice(0, 3) === "경기도") {
                     delete wolse[key];
+                    delete wolse_location_count[key];
                 }
             }
             for (key in meme) {
                 if (key.slice(0, 3) === "경기도") {
                     delete meme[key];
+                    delete meme_location_count[key];
                 }
             }
 
@@ -162,11 +174,6 @@
             location_name.innerText = $("#select_address option:selected").val();
             sidebar_name.innerText = $("#select_address option:selected").val();
 
-            $("#select_address").change(() => {
-                location_name.innerText = $("#select_address option:selected").val();
-                sidebar_name.innerText = $("#select_address option:selected").val();
-            })
-
             var ctx = document.getElementById("chartLinePurple").getContext("2d");
 
             var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
@@ -176,7 +183,7 @@
             gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
 
             var data = {
-                labels: ['전세', '월세', '매매'],
+                labels: Object.keys(junse_location_count),
                 datasets: [{
                     label: "Data",
                     //fill: true,
@@ -198,15 +205,30 @@
                         'rgb(255, 205, 86)'
                     ],
                     hoverOffset: 4,
-                    data: [80, 100, 70],
+                    data: Object.values(junse_location_count)
                 }]
             };
 
             var myChart = new Chart(ctx, {
                 type: 'horizontalBar',
                 data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
                 //options: gradientChartOptionsConfigurationWithTooltipPurple
             });
+
+            $("#select_address").change(() => {
+                location_name.innerText = $("#select_address option:selected").val();
+                sidebar_name.innerText = $("#select_address option:selected").val();
+                myChart.data.datasets[0].data = [junse[location_name.innerText], wolse[location_name.innerText], meme[location_name.innerText]];
+                myChart.update();
+            })
+
             isActivated = true;
         });
     };

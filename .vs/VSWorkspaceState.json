@@ -5,12 +5,12 @@
     "\\home",
     "\\static",
     "\\static\\assets",
-    "\\static\\assets\\css",
+    "\\static\\assets\\js",
     "\\templates",
     "\\templates\\includes",
     "\\templates\\layouts",
     "\\templates\\pages"
   ],
-  "SelectedNode": "\\manage.py",
+  "SelectedNode": "\\templates\\includes\\sidebar.html",
   "PreviewInSolutionExplorer": false
 }
