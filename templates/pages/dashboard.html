@@ -65,14 +65,20 @@
                             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                         }).addTo(map);
 
-                        //$("#houseTable").on('click', 'tr', function () {
-                        //    console.log("ddddddd")
-                        //    let row = $("#houseTable").DataTable().row($(this)).data()
-                        //    console.log(row);
-                        //})
-
                         $(document).on('click', '#houseTable', function (event) {
-                            console.log(event)
+                            let houseInfo = event.target.offsetParent.innerText.split("\t");
+
+                            $.ajax({
+                                type: "Post",
+                                url: "accessDB",
+                                data: JSON.stringify(houseInfo),
+                                success: function (json) {
+                                    console.log(json)
+                                },
+                                error: function (xhr, errmsg, err){
+                                    console.log(xhr.status + ": " + xhr.responseText);
+                                }
+                            })
                         })
 
                     </script>
@@ -314,6 +320,9 @@
                                         <th>
                                             매매가
                                         </th>
+                                        <th>
+                                            공인중개사
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -336,6 +345,9 @@
                                         </td>
                                         <td>
                                             {{house.memePrice}}
+                                        </td>
+                                        <td>
+                                            {{house.agentName}}
                                         </td>
                                     </tr>
                                     {% endfor %}

@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\core",
     "\\home",
+    "\\home\\migrations\\__pycache__",
     "\\static",
     "\\static\\assets",
-    "\\static\\assets\\js",
+    "\\static\\assets\\demo",
     "\\templates",
     "\\templates\\includes",
     "\\templates\\layouts",
     "\\templates\\pages"
   ],
-  "SelectedNode": "\\templates\\includes\\sidebar.html",
+  "SelectedNode": "\\home\\preprocessing.py",
   "PreviewInSolutionExplorer": false
 }
