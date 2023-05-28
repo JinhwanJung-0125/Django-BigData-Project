@@ -330,6 +330,7 @@
                                 <tbody>
                                     {% for house in house_list %}
                                     <tr>
+                                        {% if house.jibun %}
                                         <td>
                                             {{house.address}}
                                         </td>
@@ -351,6 +352,7 @@
                                         <td>
                                             {{house.agentName}}
                                         </td>
+                                        {% endif %}
                                     </tr>
                                     {% endfor %}
                                 </tbody>
