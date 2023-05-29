@@ -19,7 +19,7 @@
         $(document).ready(function () {
             // Javascript method's body can be found in assets/js/demos.js
             //demo.initDashboardPageCharts();
-
+//부동산 매물 시세 chart
             let junse = {}
             let wolse = {}
             let meme = {}
@@ -86,11 +86,12 @@
             let chart_labels_meme = Object.keys(meme);
             let chart_data_meme = Object.values(meme);
 
+    //chart 정보 가져오기
             var ctx = document.getElementById("chartBig1").getContext('2d');
             let name = document.getElementById("graph_name");
             name.innerText = "전세 총합"
 
-            var myChartData = new Chart(ctx, {
+            var myChartData = new Chart(ctx, { 
                 type: 'bar',
                 responsive: true,
                 legend: {
@@ -110,6 +111,15 @@
                         data: chart_data_junse,
                     }]
                 },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                autoSkip: false
+                            }
+                        }]
+                    }
+                }
                 //options: gradientBarChartConfiguration
             });
             //var myChartData = new Chart(ctx, config);
@@ -170,7 +180,7 @@
             sidebar_name.innerText = $("#select_address option:selected").val();
 
             var ctx = document.getElementById("chartLinePurple").getContext("2d");
-
+//걸러진 매물 chart
             var data = {
                 labels: ['전세', '월세', '매매'],
                 datasets: [{
@@ -202,6 +212,83 @@
                 myChart.data.datasets[0].data = [junse_location_count[location_name.innerText], wolse_location_count[location_name.innerText], meme_location_count[location_name.innerText]];
                 myChart.update();
             })
+
+//지도 마커 표시
+            var latitude = 37.5733557020061
+            var longitude = 127.08281348243
+            let map = L.map('map').setView([latitude, longitude], 14);
+
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+
+            let house_data = {};
+
+            {% for house in house_list %}
+                house_data["{{ house.jibun }}"] = {
+                    "address": "{{ house.address }}",
+                    "jibun": "{{ house.jibun }}",
+                    "준공 허가 날짜": "{{ house.jungong }}",
+                    "매물 구분": "{{ house.houseType }}",
+                    "층 위치": "{{ house.floors }}",
+                    "보증금": "{{ house.housePrice }}",
+                    "월세 금액": "{{ house.monthlyPrice }}",
+                    "매매가":"{{ house.memePrice }}",
+                    "최근 업데이트 날짜": "{{ house.currentlyUpdate }}",
+                    "최초 게시 날짜": "{{ house.firstUpdate }}",
+                    "추천 여부": "{{ house.recommend }}",
+                    "공인중개사": "{{ house.agentName }}",
+                    "공인중개사 주소": "{{ house.agentAddress }}",
+                    "agentNumber": "{{ house.agentNumber }}",
+                    "latitude": {{ house.latitude }},
+                    "longitude": {{house.longtitude}}
+                };
+            {% endfor %}
+
+            // when table cell clicked, get info
+            $(document).on('click', '#houseTable', function (event) {
+                let target = event.target;
+                while (target && target.nodeName !== "TR") {
+                    target = target.parentNode;
+                }
+                if (target) {
+                    let jibun = target.cells[1].innerText;
+                    console.log(jibun);
+
+                    let houseInfo = house_data[jibun]; // Get house info by jibun from dictionary
+                    console.log(houseInfo)
+
+                    if (houseInfo) {
+                        latitude = houseInfo["latitude"]; // Get latitude
+                        longitude = houseInfo["longitude"]; // Get longitude
+                        console.log(latitude)
+                        console.log(longitude)
+
+                        // Remove previous marker
+                        if (window.marker) map.removeLayer(window.marker);
+
+                        // Create marker on map
+                        window.marker = L.marker([latitude, longitude]).addTo(map);
+
+                        // Add a popup to the marker
+                        let popupContent = `<b>지번 주소:</b> ${jibun}<br>`;
+                        for (let key in houseInfo) {
+                            if(key !== "address" && key !== "jibun" && key !== "agentNumber"&& key !== "latitude" && key !== "longitude"){
+                                popupContent += `<br><b>${key}:</b> ${houseInfo[key]}`;
+                            }
+                        }
+                        window.marker.bindPopup(popupContent).openPopup();
+
+                        // Center the map to the marker
+                        map.setView(new L.LatLng(latitude, longitude), 17);
+                    } else {
+                        console.log("No coordinates found for this address.")
+                    }
+                }
+            })
+
+
 
             isActivated = true;
         });

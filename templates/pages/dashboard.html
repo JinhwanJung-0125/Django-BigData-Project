@@ -58,7 +58,9 @@
             <div class="card-body">
                 <div class="chart-area" id="map">
                     <script>
-                        let map = L.map('map').setView([37.5664700, 126.9779630], 14);
+                        /*var latitude = 37.5733557020061
+                        var longitude = 127.08281348243
+                        let map = L.map('map').setView([latitude, longitude], 14);
 
                         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                             maxZoom: 19,
@@ -95,12 +97,20 @@
                             <h5 class="card-category">걸러진 매물 수</h5>
                             <h3 class="card-title"><i class="text-primary" id="location_name"></i></h3>
                         </div>
-                        <div class="col-sm-6">
+                        <!--<div class="col-sm-6">
                             <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
                                 <label class="btn btn-sm btn-primary btn-simple active" id="3">
                                     <select name="options" id="select_address" style="border-style: none; background: none;">
                                     </select>
                                 </label>
+                            </div>
+                        </div>-->
+                        <div class="col-sm-6">
+                            <div class="btn-group float-right">
+                                <button class="btn btn-sm btn-primary btn-simple active" id="3">
+                                    <select name="options" id="select_address" style="border-style: none; background: none;">
+                                    </select>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -328,6 +338,7 @@
                                 <tbody>
                                     {% for house in house_list %}
                                     <tr>
+                                        {% if house.jibun %}
                                         <td>
                                             {{house.address}}
                                         </td>
@@ -349,6 +360,7 @@
                                         <td>
                                             {{house.agentName}}
                                         </td>
+                                        {% endif %}
                                     </tr>
                                     {% endfor %}
                                 </tbody>
