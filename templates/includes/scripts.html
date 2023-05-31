@@ -275,7 +275,9 @@
                         let popupContent = `<b>지번 주소:</b> ${jibun}<br>`;
                         for (let key in houseInfo) {
                             if(key !== "address" && key !== "jibun" && key !== "agentNumber"&& key !== "latitude" && key !== "longitude"){
-                                popupContent += `<br><b>${key}:</b> ${houseInfo[key]}`;
+                                if (houseInfo[key] !== 'None'){
+                                    popupContent += `<br><b>${key}:</b> ${houseInfo[key]}`;
+                                }
                             }
                         }
                         window.marker.bindPopup(popupContent).openPopup();
