@@ -218,7 +218,8 @@
                         success: function (data) {
                             $("#houseTable tbody").empty(); // 테이블 비우기
                             $.each(data.house_list, function(i, item) {
-                                if (item.jibun != null) { // jibun 값이 None인 경우를 제외하고 리스트에 추가
+                                if (item.jibun != '' ) { // jibun 값이 None인 경우를 제외하고 리스트에 추가
+                                    console.log(item.jibun);
                                     var $tr = $('<tr>').append(
                                         $('<td>').text(item.address),
                                         $('<td>').text(item.jibun),
