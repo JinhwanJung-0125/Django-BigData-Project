@@ -72,3 +72,11 @@ def accessDB(request):
     return JsonResponse(context)
 
 
+def houseListTable(request):
+    
+    selected_address = request.GET.get('selected_address', None)
+
+    houses = HouseTable.objects.filter(address=selected_address)
+    house_list = list(houses.values('address', 'jibun', 'houseType', 'housePrice', 'monthlyPrice', 'memePrice', 'agentName'))
+
+    return JsonResponse({'house_list': house_list})

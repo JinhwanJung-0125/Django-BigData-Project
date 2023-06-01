@@ -207,6 +207,31 @@
             });
 
             $("#select_address").change(() => {
+                var selected_address = $("#select_address option:selected").val();
+            
+                    $.ajax({
+                        url: "houseListTable",
+                        data: {
+                          'selected_address': selected_address
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            $("#houseTable tbody").empty(); // 테이블 비우기
+                            $.each(data.house_list, function(i, item) {
+                                var $tr = $('<tr>').append(
+                                    $('<td>').text(item.address),
+                                    $('<td>').text(item.jibun),
+                                    $('<td>').text(item.houseType),
+                                    $('<td>').text(item.housePrice),
+                                    $('<td>').text(item.monthlyPrice),
+                                    $('<td>').text(item.memePrice),
+                                    $('<td>').text(item.agentName)
+                                );
+                                $("#houseTable tbody").append($tr);
+                            });
+                        }
+                    });
+
                 location_name.innerText = $("#select_address option:selected").val();
                 sidebar_name.innerText = $("#select_address option:selected").val();
                 myChart.data.datasets[0].data = [junse_location_count[location_name.innerText], wolse_location_count[location_name.innerText], meme_location_count[location_name.innerText]];
