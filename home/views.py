@@ -26,7 +26,7 @@ def accessDB(request):
             else:
                 result = HouseTable.objects.filter(Q(address = data[0]) & Q(jibun = data[1]) & Q(houseType = data[2]) & Q(housePrice = data[3]) & Q(agentName = data[6]))
 
-            estimateprice = preprocessing.calculate_weighted_average([float(result[0].latitude), float(result[0].longtitude)])
+            estimateprice = preprocessing.calculate_weighted_average([float(result[0].latitude), float(result[0].longtitude)], "전세")
 
             context = {
                 "latitude" : result[0].latitude,
@@ -41,7 +41,7 @@ def accessDB(request):
             else:
                 result = HouseTable.objects.filter(Q(address = data[0]) & Q(jibun = data[1]) & Q(houseType = data[2]) & Q(housePrice = data[3]) & Q(monthlyPrice = data[4]) & Q(agentName = data[6]))
 
-            estimateprice, estimateprice2 = preprocessing.calculate_weighted_average([float(result[0].latitude), float(result[0].longtitude)])
+            estimateprice, estimateprice2 = preprocessing.calculate_weighted_average([float(result[0].latitude), float(result[0].longtitude)], '월세')
 
             context = {
                 "latitude" : result[0].latitude,
@@ -57,7 +57,7 @@ def accessDB(request):
             else:
                 result = HouseTable.objects.filter(Q(address = data[0]) & Q(jibun = data[1]) & Q(houseType = data[2]) & Q(memePrice = data[5]) & Q(agentName = data[6]))
 
-            estimateprice = preprocessing.calculate_weighted_average([float(result[0].latitude), float(result[0].longtitude)])
+            estimateprice = preprocessing.calculate_weighted_average([float(result[0].latitude), float(result[0].longtitude)], '매매')
 
             context = {
                 "latitude" : result[0].latitude,
