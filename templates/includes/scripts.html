@@ -219,7 +219,6 @@
                             $("#houseTable tbody").empty(); // 테이블 비우기
                             $.each(data.house_list, function(i, item) {
                                 if (item.jibun != '' ) { // jibun 값이 None인 경우를 제외하고 리스트에 추가
-                                    console.log(item.jibun);
                                     var $tr = $('<tr>').append(
                                         $('<td>').text(item.address),
                                         $('<td>').text(item.jibun),
@@ -282,16 +281,13 @@
                 }
                 if (target) {
                     let jibun = target.cells[1].innerText;
-                    console.log(jibun);
-
+        
                     let houseInfo = house_data[jibun]; // Get house info by jibun from dictionary
-                    console.log(houseInfo)
+
 
                     if (houseInfo) {
                         latitude = houseInfo["latitude"]; // Get latitude
                         longitude = houseInfo["longitude"]; // Get longitude
-                        console.log(latitude)
-                        console.log(longitude)
 
                         // Remove previous marker
                         if (window.marker) map.removeLayer(window.marker);
