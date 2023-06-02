@@ -31,7 +31,8 @@ def accessDB(request):
             context = {
                 "latitude" : result[0].latitude,
                 "longtitude": result[0].longtitude,
-                "estimate_house_price": estimateprice
+                "estimate_house_price": estimateprice,
+                "house_type": "전세"
             }
 
             print(estimateprice)
@@ -47,7 +48,8 @@ def accessDB(request):
                 "latitude" : result[0].latitude,
                 "longtitude": result[0].longtitude,
                 "estimate_house_price": estimateprice,
-                "estimate_monthly_price": estimateprice2
+                "estimate_monthly_price": estimateprice2,
+                "house_type": "월세"
             }
 
             print(estimateprice, " ", estimateprice2)
@@ -62,7 +64,8 @@ def accessDB(request):
             context = {
                 "latitude" : result[0].latitude,
                 "longtitude": result[0].longtitude,
-                "estimate_meme_price": estimateprice
+                "estimate_meme_price": estimateprice,
+                "house_type": "매매"
             }
 
             print(estimateprice)

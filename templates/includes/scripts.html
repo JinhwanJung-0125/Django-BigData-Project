@@ -314,7 +314,21 @@
                 }
             })
 
+            $(document).on('click', '#houseTable', function (event) {
+                let houseInfo = event.target.offsetParent.innerText.split("\t");
 
+                $.ajax({
+                    type: "Post",
+                    url: "accessDB",
+                    data: JSON.stringify(houseInfo),
+                    success: function (json) {
+                        console.log(json)
+                    },
+                    error: function (xhr, errmsg, err) {
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                })
+            })
 
             isActivated = true;
         });
