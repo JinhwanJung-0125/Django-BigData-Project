@@ -1,12 +1,20 @@
 {% load i18n static admin_black %}
 <ul class="nav">
   <li class="{% if 'dashboard' in segment %} active {% endif %}">
-    <a href="/">
-      <i class="tim-icons icon-chart-pie-36"></i>
-      <p>Dashboard</p>
+    <!--<a href="/">-->
+    <a href="#firstView" style="font-size: 15px; font-weight: 345;">
+      <i class="tim-icons icon-chart-bar-32"></i>
+      부동산 매물 시세 </a>
+    <a href="#secondView" style="font-size: 15px; font-weight: 345;">
+      <i class="tim-icons icon-compass-05"></i>
+      매물 위치</a>
+    <a href="#thirdView" style="font-size: 15px; font-weight: 345;">
+      <i class="tim-icons icon-bullet-list-67"></i>
+      매물 리스트</a>
+      <!--<p>Dashboard</p>
     </a>
   </li>
-  <!--{% if not request.user.is_authenticated %}
+  {% if not request.user.is_authenticated %}
   <li class="{% if 'pages' in parent %}active{% endif %}">
     <a data-toggle="collapse" href="#pagesExamples">
       <i class="tim-icons icon-lock-circle"></i>
