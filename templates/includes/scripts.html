@@ -281,7 +281,6 @@
                 }
                 if (target) {
                     let jibun = target.cells[1].innerText;
-        
                     let houseInfo = house_data[jibun]; // Get house info by jibun from dictionary
 
 
@@ -297,37 +296,45 @@
 
                         // Add a popup to the marker
                         let popupContent = `<b>지번 주소:</b> ${jibun}<br>`;
+
+                        let info = event.target.offsetParent.innerText.split("\t");
+        
+                        $.ajax({
+                            type: "Post",
+                            url: "accessDB",
+                            data: JSON.stringify(info),
+                            success: function (json) {
+                                console.log(json)
+                                for (let key in json){
+                                    if(key !== "latitude" && key !== "longtitude" && key !== "house_type"){
+                                        console.log(key)
+                                        console.log(json[key])
+                                        popupContent += `<br><b>${key}:</b> ${json[key]}`;
+                                        console.log(popupContent)
+                                    }
+                                }
+                                window.marker.bindPopup(popupContent).openPopup();
+
+                                // Center the map to the marker
+                                map.setView(new L.LatLng(latitude, longitude), 17);
+                            },
+
+                            error: function (xhr, errmsg, err) {
+                                console.log(xhr.status + ": " + xhr.responseText);
+                            }
+                        })
+
                         for (let key in houseInfo) {
-                            if(key !== "address" && key !== "jibun" && key !== "agentNumber"&& key !== "latitude" && key !== "longitude"){
+                            if(key !== "address" && key !== "jibun" && key !== "agentNumber"&& key !== "latitude" && key !== "longitude"&& key !== "추천 여부"){
                                 if (houseInfo[key] !== 'None'){
                                     popupContent += `<br><b>${key}:</b> ${houseInfo[key]}`;
                                 }
                             }
                         }
-                        window.marker.bindPopup(popupContent).openPopup();
-
-                        // Center the map to the marker
-                        map.setView(new L.LatLng(latitude, longitude), 17);
                     } else {
                         console.log("No coordinates found for this address.")
                     }
                 }
-            })
-
-            $(document).on('click', '#houseTable', function (event) {
-                let houseInfo = event.target.offsetParent.innerText.split("\t");
-
-                $.ajax({
-                    type: "Post",
-                    url: "accessDB",
-                    data: JSON.stringify(houseInfo),
-                    success: function (json) {
-                        console.log(json)
-                    },
-                    error: function (xhr, errmsg, err) {
-                        console.log(xhr.status + ": " + xhr.responseText);
-                    }
-                })
             })
 
             isActivated = true;
