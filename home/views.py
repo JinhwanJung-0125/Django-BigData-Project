@@ -31,7 +31,7 @@ def accessDB(request):
             context = {
                 "latitude" : result[0].latitude,
                 "longtitude": result[0].longtitude,
-                "estimate_house_price": estimateprice,
+                "예상 전세 보증금 가격": estimateprice,
                 "house_type": "전세"
             }
 
@@ -47,8 +47,8 @@ def accessDB(request):
             context = {
                 "latitude" : result[0].latitude,
                 "longtitude": result[0].longtitude,
-                "estimate_house_price": estimateprice,
-                "estimate_monthly_price": estimateprice2,
+                "예상 월세 보증금 가격": estimateprice,
+                "예상 월세 가격": estimateprice2,
                 "house_type": "월세"
             }
 
@@ -64,7 +64,7 @@ def accessDB(request):
             context = {
                 "latitude" : result[0].latitude,
                 "longtitude": result[0].longtitude,
-                "estimate_meme_price": estimateprice,
+                "예상 매매 가격": estimateprice,
                 "house_type": "매매"
             }
 

@@ -256,18 +256,20 @@
                 house_data["{{ house.jibun }}"] = {
                     "address": "{{ house.address }}",
                     "jibun": "{{ house.jibun }}",
+                    "info": "---------- 매물 정보 ----------",
                     "준공 허가 날짜": "{{ house.jungong }}",
-                    "매물 구분": "{{ house.houseType }}",
                     "층 위치": "{{ house.floors }}",
-                    "보증금": "{{ house.housePrice }}",
-                    "월세 금액": "{{ house.monthlyPrice }}",
-                    "매매가":"{{ house.memePrice }}",
                     "최근 업데이트 날짜": "{{ house.currentlyUpdate }}",
                     "최초 게시 날짜": "{{ house.firstUpdate }}",
                     "추천 여부": "{{ house.recommend }}",
                     "공인중개사": "{{ house.agentName }}",
                     "공인중개사 주소": "{{ house.agentAddress }}",
                     "agentNumber": "{{ house.agentNumber }}",
+                    "line": "------- 가격 예측 비교 --------",
+                    "매물 구분": "{{ house.houseType }}",
+                    "보증금": "{{ house.housePrice }}",
+                    "월세 금액": "{{ house.monthlyPrice }}",
+                    "매매가":"{{ house.memePrice }}",
                     "latitude": {{ house.latitude }},
                     "longitude": {{house.longtitude}}
                 };
@@ -295,7 +297,7 @@
                         window.marker = L.marker([latitude, longitude]).addTo(map);
 
                         // Add a popup to the marker
-                        let popupContent = `<b>지번 주소:</b> ${jibun}<br>`;
+                        let popupContent = `<b>${jibun}</b>`;
 
                         let info = event.target.offsetParent.innerText.split("\t");
         
@@ -309,13 +311,12 @@
                                     if(key !== "latitude" && key !== "longtitude" && key !== "house_type"){
                                         console.log(key)
                                         console.log(json[key])
-                                        popupContent += `<br><b>${key}:</b> ${json[key]}`;
+                                        popupContent += `<br><b>${key} :</b> ${Math.floor(json[key])}`;
                                         console.log(popupContent)
                                     }
                                 }
                                 window.marker.bindPopup(popupContent).openPopup();
 
-                                // Center the map to the marker
                                 map.setView(new L.LatLng(latitude, longitude), 17);
                             },
 
@@ -327,7 +328,12 @@
                         for (let key in houseInfo) {
                             if(key !== "address" && key !== "jibun" && key !== "agentNumber"&& key !== "latitude" && key !== "longitude"&& key !== "추천 여부"){
                                 if (houseInfo[key] !== 'None'){
-                                    popupContent += `<br><b>${key}:</b> ${houseInfo[key]}`;
+                                    if (key == "line" || key == "info"){
+                                        popupContent += `<br><br>${houseInfo[key]}<br>`;
+                                    }
+                                    else{
+                                        popupContent += `<br><b>${key} :</b> ${houseInfo[key]}`;
+                                    }
                                 }
                             }
                         }
