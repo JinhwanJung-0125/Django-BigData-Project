@@ -79,6 +79,17 @@
                 }
             }
 
+            //각 지역별 전세, 월세, 매매 평균 구하기
+            for (key in junse) {
+                junse[key] = Math.round(junse[key] / junse_location_count[key]);
+            }
+            for (key in wolse) {
+                wolse[key] = Math.round(wolse[key] / wolse_location_count[key]);
+            }
+            for (key in meme) {
+                meme[key] = Math.round(meme[key] / meme_location_count[key]);
+            }
+
             var chart_labels_junse = Object.keys(junse);
             var chart_data_junse = Object.values(junse);
             let chart_labels_wolse = Object.keys(wolse);
@@ -89,7 +100,7 @@
     //chart 정보 가져오기
             var ctx = document.getElementById("chartBig1").getContext('2d');
             let name = document.getElementById("graph_name");
-            name.innerText = "전세 총합"
+            name.innerText = "전세 평균"
 
             var myChartData = new Chart(ctx, { 
                 type: 'bar',
@@ -100,7 +111,7 @@
                 data: {
                     labels: chart_labels_junse,
                     datasets: [{
-                        label: "전세 보증금",
+                        label: "전세 보증금 (만원)",
                         fill: true,
                         //backgroundColor: gradientStroke,
                         //hoverBackgroundColor: gradientStroke,
@@ -124,28 +135,28 @@
             });
             //var myChartData = new Chart(ctx, config);
             $("#0").click(function () {
-                name.innerText = "전세 총합"
+                name.innerText = "전세 평균"
                 var data = myChartData.config.data;
                 data.datasets[0].data = chart_data_junse;
                 data.labels = chart_labels_junse;
-                data.datasets[0].label = "전세 보증금"
+                data.datasets[0].label = "전세 보증금 (만원)"
                 myChartData.update();
             });
             $("#1").click(function () {
-                name.innerText = "월세 총합"
+                name.innerText = "월세 평균"
                 var data = myChartData.config.data;
                 data.datasets[0].data = chart_data_wolse;
                 data.labels = chart_labels_wolse;
-                data.datasets[0].label = "월세금"
+                data.datasets[0].label = "월세금 (만원)"
                 myChartData.update();
             });
 
             $("#2").click(function () {
-                name.innerText = "매매 총합"
+                name.innerText = "매매 평균"
                 var data = myChartData.config.data;
                 data.datasets[0].data = chart_data_meme;
                 data.labels = chart_labels_meme;
-                data.datasets[0].label = "매매가"
+                data.datasets[0].label = "매매가 (만원)"
                 myChartData.update();
             });
 
