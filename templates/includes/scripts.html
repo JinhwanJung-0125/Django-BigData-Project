@@ -26,6 +26,9 @@
             let junse_location_count = {}
             let wolse_location_count = {}
             let meme_location_count = {}
+            let junse_location_count_before = {}
+            let wolse_location_count_before = {}
+            let meme_location_count_before = {}
 
             {% for house in house_list %}
             if ("{{ house.houseType }}" === "전세") {
@@ -60,6 +63,33 @@
             }
             {% endfor %}
 
+            {% for house in house_list_before %}
+            if ("{{ house.houseType }}" === "전세") {
+                if ("{{ house.address }}" in junse_location_count_before) {
+                    junse_location_count_before["{{ house.address }}"] += 1
+                }
+                else {
+                    junse_location_count_before["{{ house.address }}"] = 1
+                }
+            }
+            else if ("{{ house.houseType }}" === "월세") {
+                if ("{{ house.address }}" in wolse_location_count_before) {
+                    wolse_location_count_before["{{ house.address }}"] += 1
+                }
+                else {
+                    wolse_location_count_before["{{ house.address }}"] = 1
+                }
+            }
+            else {
+                if ("{{ house.address }}" in meme_location_count_before) {
+                    meme_location_count_before["{{ house.address }}"] += 1
+                }
+                else {
+                    meme_location_count_before["{{ house.address }}"] = 1
+                }
+            }
+            {% endfor %}
+
             for (key in junse) {
                 if (key.slice(0, 3) === "경기도") {
                     delete junse[key];
@@ -76,6 +106,22 @@
                 if (key.slice(0, 3) === "경기도") {
                     delete meme[key];
                     delete meme_location_count[key];
+                }
+            }
+
+            for (key in junse_location_count_before) {
+                if (key.slice(0, 3) === "경기도") {
+                    delete junse_location_count_before[key];
+                }
+            }
+            for (key in wolse_location_count_before) {
+                if (key.slice(0, 3) === "경기도") {
+                    delete wolse_location_count_before[key];
+                }
+            }
+            for (key in meme_location_count_before) {
+                if (key.slice(0, 3) === "경기도") {
+                    delete meme_location_count_before[key];
                 }
             }
 
@@ -194,15 +240,28 @@
 //걸러진 매물 chart
             var data = {
                 labels: ['전세', '월세', '매매'],
-                datasets: [{
-                    backgroundColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(54, 162, 235)',
-                        'rgb(255, 205, 86)'
-                    ],
-                    hoverOffset: 4,
-                    data: [junse_location_count[location_name.innerText], wolse_location_count[location_name.innerText], meme_location_count[location_name.innerText]],
-                }]
+                datasets: [
+                    {
+                        label: "걸러진 후 매물",
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 4,
+                        data: [junse_location_count[location_name.innerText], wolse_location_count[location_name.innerText], meme_location_count[location_name.innerText]],
+                    },
+                    {
+                        label: "총 매물",
+                        backgroundColor: [
+                            'rgb(132, 99, 255)',
+                            'rgb(235, 162, 54)',
+                            'rgb(86, 205, 255)'
+                        ],
+                        hoverOffset: 4,
+                        data: [junse_location_count_before[location_name.innerText], wolse_location_count_before[location_name.innerText], meme_location_count_before[location_name.innerText]],
+                    }
+                ]
             };
 
             var myChart = new Chart(ctx, {
@@ -212,6 +271,14 @@
                 options: {
                     legend: {
                         display: false
+                    },
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            stacked: true
+                        }
                     }
                 }
                 //options: gradientChartOptionsConfigurationWithTooltipPurple
@@ -248,6 +315,7 @@
                 location_name.innerText = $("#select_address option:selected").val();
                 sidebar_name.innerText = $("#select_address option:selected").val();
                 myChart.data.datasets[0].data = [junse_location_count[location_name.innerText], wolse_location_count[location_name.innerText], meme_location_count[location_name.innerText]];
+                myChart.data.datasets[1].data = [junse_location_count_before[location_name.innerText], wolse_location_count_before[location_name.innerText], meme_location_count_before[location_name.innerText]];
                 myChart.update();
             })
 

@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import HouseTable
+from .models import FilteringHousetTable
 from django.db.models import Q
 from django.http import JsonResponse
 import json
@@ -10,8 +11,13 @@ from . import preprocessing
 # Create your views here.
 
 def index(request):
-    house_list = HouseTable.objects.order_by()
-    context = {'house_list': house_list}
+    house_list = FilteringHousetTable.objects.order_by()
+    house_list_before = HouseTable.objects.order_by()
+
+    context = {
+                'house_list': house_list,
+                'house_list_before': house_list_before
+              }
     
     # Page from the theme 
     return render(request, 'pages/dashboard.html', context)
@@ -79,7 +85,7 @@ def houseListTable(request):
     
     selected_address = request.GET.get('selected_address', None)
 
-    houses = HouseTable.objects.filter(address=selected_address)
+    houses = FilteringHousetTable.objects.filter(address=selected_address)
     house_list = list(houses.values('address', 'jibun', 'houseType', 'housePrice', 'monthlyPrice', 'memePrice', 'agentName'))
 
     return JsonResponse({'house_list': house_list})
